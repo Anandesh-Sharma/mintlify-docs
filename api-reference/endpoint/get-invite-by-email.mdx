@@ -3,7 +3,18 @@ title: 'Get Invite By Email'
 openapi: 'GET /invites'
 ---
 
-This endpoint retrieves invite information using an email address. You can optionally specify an event ID to narrow the search to a specific event.
+This endpoint looks up an invitation using an email address. It's particularly useful when attendees need to find their own invitation or when you're searching for someone by email rather than invite ID.
+
+**What it does:**
+- Finds an invitation using an email address instead of an ID
+- Can search within a specific event or across all events
+- Returns complete details about the matching invitation
+
+**When to use it:**
+- When an attendee contacts you saying they lost their invitation
+- For customer support when helping attendees
+- When building a "look up your invitation" feature on your website
+- When searching for a specific person but you only have their email
 
 ## Query Parameters
 
@@ -38,4 +49,4 @@ The API returns the invite object that matches the specified email address:
 }
 ```
 
-This endpoint is particularly useful for user-facing interfaces where attendees might need to look up their invitation using their email address. 
+**Tip:** If you don't provide an `event_id` parameter, the API will search for the email across all events. This can be useful, but if you know which event you're looking for, adding the `event_id` will make the search faster and more specific. 

@@ -3,7 +3,18 @@ title: 'Update Invite Status'
 openapi: 'PUT /events/{event_id}/invites/{invite_id}'
 ---
 
-This endpoint allows you to update the status of a specific invite for an event.
+This endpoint allows you to change the status of an invitation. Use it to manually update an invitation's status when needed, such as marking it as accepted or rejected.
+
+**What it does:**
+- Changes the status of a specific invitation
+- Updates the invitation record with the new status
+- Records the time of the status change
+
+**When to use it:**
+- When manually updating an invitation based on an RSVP
+- If an attendee contacts you directly to accept or decline
+- When you need to override an invitation status
+- For administrative management of invitations
 
 ## Path Parameters
 
@@ -52,4 +63,10 @@ The API returns the updated invite object with all its details:
 }
 ```
 
-Use this endpoint to track RSVPs, manage event attendance, or update invitation status based on user actions. 
+**Status meanings:**
+- `pending`: The invitation has been created but not sent
+- `sent`: The invitation has been sent but not yet responded to
+- `accepted`: The invitee has accepted the invitation
+- `rejected`: The invitee has declined the invitation
+
+**Note:** The `updated_at` field will automatically be set to the current time when you change the status. 

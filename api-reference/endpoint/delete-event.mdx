@@ -3,7 +3,18 @@ title: 'Delete Event'
 openapi: 'DELETE /events/{event_id}'
 ---
 
-This endpoint marks an event as deleted in the system. Note that this is a soft delete - the event is not permanently removed from the database but is marked with an `is_deleted` flag.
+This endpoint allows you to remove events that are no longer needed from your active listings.
+
+**What it does:**
+- Marks an event as deleted in the system (soft delete)
+- Keeps the event data in the database but hides it from normal listings
+- Changes the event's `is_deleted` status to `true`
+
+**When to use it:**
+- When an event has been canceled
+- When you created an event by mistake
+- When you want to clean up your event listings
+- When you want to archive old events but retain their data
 
 ## Path Parameters
 
@@ -35,4 +46,6 @@ The API returns the updated event object with `is_deleted` set to `true`:
   "is_deleted": true,
   "created_at": "2023-02-28T12:00:00Z"
 }
-``` 
+```
+
+**Note:** This is a soft delete operation. The event data is preserved in the system but will no longer appear in the regular event listings. This allows you to maintain historical records while cleaning up your active events. 

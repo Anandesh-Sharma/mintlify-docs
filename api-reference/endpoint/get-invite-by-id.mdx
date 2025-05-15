@@ -3,7 +3,18 @@ title: 'Get Invite By ID'
 openapi: 'GET /invites/{invite_id}'
 ---
 
-This endpoint retrieves detailed information about a specific invite using its unique ID.
+This endpoint retrieves detailed information about a specific invitation using its unique ID. It's useful when you need to check the status of a particular invite or view its details.
+
+**What it does:**
+- Fetches complete information about a single invitation
+- Returns all details including contact information, status, and tracking data
+- Provides the unique codes needed for check-in
+
+**When to use it:**
+- When checking the status of a specific invitation
+- When troubleshooting issues with a particular invitee
+- For retrieving an individual's invitation details at check-in
+- When you need to verify if someone was invited
 
 ## Path Parameters
 
@@ -37,4 +48,8 @@ The API returns the invite object with all its details:
 }
 ```
 
-Use this endpoint to view detailed information about an individual invite, such as their contact information, authentication method, and current status. 
+**Key information in the response:**
+- `session_code`: The unique code needed for QR-based check-in
+- `authentication_method`: How this person will be verified (QR Code, Biometric, or Both)
+- `status`: Current status of the invitation (pending, sent, accepted, rejected)
+- `last_seen`: When this person was last active with their invitation 

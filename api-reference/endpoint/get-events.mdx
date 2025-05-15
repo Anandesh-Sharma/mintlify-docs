@@ -3,7 +3,17 @@ title: 'Get All Events'
 openapi: 'GET /events'
 ---
 
-This endpoint returns all events in the system, categorized by their status. Use this endpoint to retrieve a comprehensive list of events for display or further processing.
+This endpoint gives you a complete list of all events in your account, organized by their current status. It's usually the first API you'll call when building an event dashboard or management interface.
+
+**What it does:**
+- Returns all your events, sorted into categories (ongoing, upcoming, ended, archived)
+- Provides complete details for each event including location, times, and settings
+- Helps you track which events are active and which have concluded
+
+**When to use it:**
+- When building an event management dashboard
+- When you need to display a list of events to users
+- To monitor the status of all your events at once
 
 ## Authentication
 
@@ -23,44 +33,44 @@ The response contains a list of all events organized by their status (ongoing, e
 {
   "ongoing": [
     {
-      "title": "SFO Airport",
-      "description": "",
-      "instructions": "",
-      "imageUrl": "https://securegate-event-images.s3.amazonaws.com/events/4f546045-af01-473d-9e50-6002d0f77461/event_image.png",
+      "title": "Annual Conference 2023",
+      "description": "Technology industry conference",
+      "instructions": "Check-in opens at 8:00 AM",
+      "imageUrl": "https://example.com/images/events/annual-conference.png",
       "location": {
-        "address": "San Francisco, CA 94128, United States",
-        "city": "",
-        "state": "",
-        "zipCode": "",
-        "country": ""
+        "address": "123 Convention Center Way",
+        "city": "San Francisco",
+        "state": "CA",
+        "zipCode": "94103",
+        "country": "USA"
       },
-      "start_timestamp": null,
-      "end_timestamp": null,
-      "type": "fixed",
+      "start_timestamp": 1683730000000,
+      "end_timestamp": 1683816400000,
+      "type": "dated",
       "is_deleted": false,
-      "id": "fb081980-ceca-4d2a-a7f3-5e044449b701",
-      "created_at": "2025-05-08T14:43:02.308000",
-      "updated_at": "2025-05-08T14:43:02.308000"
+      "id": "evt_abc123def456",
+      "created_at": "2023-01-15T10:30:00.000000",
+      "updated_at": "2023-01-15T10:30:00.000000"
     },
     {
-      "title": "Newark Airport (ONY)",
-      "description": "",
-      "instructions": "",
-      "imageUrl": "https://securegate-event-images.s3.amazonaws.com/events/2249b3d4-7c91-494a-9145-b803d6412835/event_image.png",
+      "title": "Tech Expo",
+      "description": "Product showcase and demonstrations",
+      "instructions": "Bring ID for security clearance",
+      "imageUrl": "https://example.com/images/events/tech-expo.png",
       "location": {
-        "address": "Newark, NJ 07114, United States",
-        "city": "",
-        "state": "",
-        "zipCode": "",
-        "country": ""
+        "address": "456 Innovation Blvd",
+        "city": "New York",
+        "state": "NY",
+        "zipCode": "10001",
+        "country": "USA"
       },
-      "start_timestamp": null,
-      "end_timestamp": null,
-      "type": "fixed",
+      "start_timestamp": 1684334800000,
+      "end_timestamp": 1684421200000,
+      "type": "dated",
       "is_deleted": false,
-      "id": "2249b3d4-7c91-494a-9145-b803d6412835",
-      "created_at": "2025-05-08T14:46:49.865000",
-      "updated_at": "2025-05-08T14:46:49.865000"
+      "id": "evt_ghi789jkl012",
+      "created_at": "2023-02-10T14:15:00.000000",
+      "updated_at": "2023-02-10T14:15:00.000000"
     }
   ],
   "ended": [],

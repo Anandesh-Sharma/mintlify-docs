@@ -5,7 +5,14 @@ description: 'Welcome to the Securegate.ai API documentation'
 
 ## Overview
 
-Securegate.ai provides a comprehensive API for event management, attendee registration, and identity verification. Our API allows you to create and manage events, handle invitations, register attendees, and implement secure identity verification.
+Securegate.ai provides APIs for managing secure events with advanced identity verification. Our platform helps you:
+
+- Create and manage events (conferences, access-controlled locations, etc.)
+- Send and track invitations to attendees
+- Register and verify attendees using biometric authentication
+- Control access to secure locations with facial recognition
+
+Think of it as an end-to-end system for running events where security and identity verification are important.
 
 <Card
   title="Securegate.ai API Endpoints"
@@ -17,16 +24,16 @@ Securegate.ai provides a comprehensive API for event management, attendee regist
 
 ## API Structure
 
-Our API is organized into several functional areas:
+Our API is organized into four main areas, reflecting the typical workflow:
 
-- **Event Management**: Create, retrieve, and manage events
-- **Attendee Management**: Register attendees and retrieve attendee information
-- **Invite Management**: Create and manage invitations for events
-- **Authentication & Identity**: Generate authentication tokens and verify identity
+- **Event Management**: First, create and configure your events
+- **Attendee Management**: Register and manage the people attending your events
+- **Invite Management**: Send and track invitations for controlled access
+- **Authentication & Identity**: Verify identities with biometric data
 
 ## Authentication
 
-All API endpoints are authenticated using API keys. You need to include your API key in the `x-api-key` header of each request.
+All API endpoints require an API key for security. Include your key in the `x-api-key` header of each request:
 
 ```json
 // Include this in your API requests

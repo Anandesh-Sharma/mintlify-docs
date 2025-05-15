@@ -3,7 +3,19 @@ title: 'Identify Personal'
 openapi: 'POST /identity'
 ---
 
-This endpoint identifies a person from an image at a specific event. It uses facial recognition technology to match the image against registered attendees.
+This endpoint is the core of Securegate's security system. It uses facial recognition to verify a person's identity at an event by matching their face to registered attendees.
+
+**What it does:**
+- Takes an image of a person trying to access your event
+- Uses facial recognition to match them against registered attendees
+- Returns detailed verification information including KYC (Know Your Customer) data
+- Helps ensure only authorized people can access secure locations
+
+**When to use it:**
+- At check-in points for secure events
+- When someone needs to access a restricted area
+- For continuous verification of identity during an event
+- To implement biometric access control at facilities
 
 ## Query Parameters
 
@@ -14,21 +26,167 @@ This endpoint identifies a person from an image at a specific event. It uses fac
 
 ## Response
 
-The API returns session information for the identified person:
+The API returns detailed session information for the identified person including user data, authentication status, KYC details, and session metadata:
 
 ```json
 {
-  "session_id": "session-123",
-  "user_id": "user-456",
-  "first_name": "John",
-  "last_name": "Doe",
-  "email": "john.doe@example.com",
-  "similarity_score": 0.95,
-  "matched": true,
-  "timestamp": "2023-03-01T14:30:00Z"
+  "userInfo": {
+    "email": "johndoe@example.com",
+    "userId": "usr_abc123xyz456",
+    "name": "John Doe",
+    "phone": "5551234567",
+    "countryCode": "+1"
+  },
+  "authentication": [
+    {
+      "conditions": [],
+      "_id": "auth_789xyz123abc",
+      "data": {
+        "stepId": "authentication",
+        "actionId": "facialRecognition",
+        "status": "completed",
+        "data": {
+          "selfieImage": "https://example.com/storage/selfie-image.png",
+          "blobVideoUrl": "https://example.com/storage/verification-video.webm"
+        },
+        "stepStartTime": "2023-05-10T14:30:00Z",
+        "stepEndTime": "2023-05-10T14:32:00Z"
+      },
+      "parentIds": [],
+      "stepId": "authentication"
+    }
+  ],
+  "kyc": [
+    {
+      "conditions": [],
+      "_id": "kyc_456abc789xyz",
+      "data": {
+        "kyc": {
+          "document": {
+            "frontImage": {
+              "value": "https://example.com/storage/document-front.png",
+              "verified": false
+            },
+            "idType": {
+              "value": "drivers-license",
+              "verified": true
+            },
+            "idNumber": {
+              "value": "DL1234567",
+              "verified": true
+            },
+            "dateOfExpiry": {
+              "value": "2028-05-28",
+              "verified": true
+            }
+          },
+          "basicInfo": {
+            "firstName": {
+              "value": "JOHN",
+              "verified": true
+            },
+            "lastName": {
+              "value": "DOE",
+              "verified": true
+            },
+            "dateOfBirth": {
+              "value": "1985-07-15",
+              "verified": true
+            },
+            "address": {
+              "value": "123 Main Street",
+              "verified": true
+            },
+            "city": {
+              "value": "Anytown",
+              "verified": true
+            },
+            "zip": {
+              "value": "12345",
+              "verified": true
+            },
+            "country": {
+              "value": "USA",
+              "verified": true
+            },
+            "sex": {
+              "value": "male",
+              "data": "Male"
+            }
+          }
+        },
+        "status": "completed",
+        "provider": "IDENTITY_PROVIDER"
+      },
+      "parentIds": ["auth_789xyz123abc"],
+      "stepId": "kyc"
+    }
+  ],
+  "status": "completed",
+  "qrId": "qr_101112131415",
+  "activities": [
+    {
+      "type": "logs",
+      "userName": "Automated Compliance Agent",
+      "id": "act_20212223242526",
+      "metadata": {
+        "time": 1683730000000,
+        "data": "completed KYC verification",
+        "to": "completed",
+        "from": "processing",
+        "stepId": "kyc"
+      }
+    }
+  ],
+  "metadata": {
+    "deviceInfo": {
+      "name": "John Doe",
+      "email": "johndoe@example.com",
+      "type": "desktop"
+    },
+    "geoLocation": {
+      "latitude": 37.7749,
+      "longitude": -122.4194
+    },
+    "sessionMetadata": {
+      "userAddress": {
+        "country_code": "US",
+        "city": "San Francisco",
+        "region": "California",
+        "country": "United States",
+        "display_name": "123 Market St, San Francisco, CA 94105, USA"
+      },
+      "ipAddress": "192.0.2.1",
+      "systemData": {
+        "browser": {
+          "name": "Chrome",
+          "version": "112.0.0.0"
+        },
+        "os": {
+          "name": "Windows",
+          "version": "11"
+        }
+      }
+    }
+  },
+  "visitedOrder": [
+    "auth_789xyz123abc",
+    "kyc_456abc789xyz"
+  ]
 }
 ```
 
-If no match is found, the `matched` field will be `false` and personal information fields will be null.
+## Response Fields
 
-This endpoint is commonly used for event check-in processes, security verification, and personalized experiences at events.
+| Field | Description |
+|-------|-------------|
+| `userInfo` | Basic user details including name, email, phone, etc. |
+| `authentication` | Authentication process details including facial recognition data |
+| `kyc` | Know Your Customer information with document and personal verification details |
+| `status` | Overall status of the identity verification process |
+| `qrId` | Unique QR code identifier associated with this session |
+| `activities` | Log of actions taken during the verification process |
+| `metadata` | Additional context information including device, location, and system details |
+| `visitedOrder` | Sequence of verification steps completed |
+
+**Important**: This endpoint is the cornerstone of Securegate's security system, providing powerful identity verification capabilities that go beyond simple authentication.

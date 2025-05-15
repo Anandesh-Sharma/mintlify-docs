@@ -3,7 +3,18 @@ title: 'Get Invites'
 openapi: 'GET /events/{event_id}/invites'
 ---
 
-This endpoint retrieves all invites for a specific event. You can optionally filter the results by invite status.
+This endpoint lets you retrieve all the invitations you've sent for a specific event, with options to filter by status.
+
+**What it does:**
+- Retrieves all invitations for a particular event
+- Allows filtering by invitation status (pending, sent, accepted, rejected)
+- Provides complete information about each invite and its current status
+
+**When to use it:**
+- To monitor invitation response rates
+- When following up with people who haven't responded
+- To generate guest lists for accepted invitations
+- For reporting on invitation metrics
 
 ## Path Parameters
 
@@ -60,4 +71,10 @@ The API returns an array of invite objects matching the specified criteria:
 ]
 ```
 
-Use this endpoint to track invitation status, generate reports, or manage follow-ups with invitees. 
+**Invite status meanings:**
+- `pending`: Invitation has been created but not sent yet
+- `sent`: Invitation has been sent but no response yet
+- `accepted`: Invitee has accepted the invitation
+- `rejected`: Invitee has declined the invitation
+
+**Tip:** To get only accepted invitations (for creating a guest list), include `?status=accepted` in your query. 

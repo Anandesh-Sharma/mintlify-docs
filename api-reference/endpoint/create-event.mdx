@@ -3,7 +3,17 @@ title: 'Create Event'
 openapi: 'POST /events'
 ---
 
-This endpoint allows you to create a new event in the system. You must provide all the required event details in the request body.
+This endpoint creates a new event in your account. Use it to set up events where you'll need identity verification and secure access control.
+
+**What it does:**
+- Creates a new event with the details you provide
+- Generates a unique ID for the event that you'll use in other API calls
+- Sets up the foundation for sending invites and registering attendees
+
+**When to use it:**
+- When organizing a new conference, meeting, or secure access location
+- When you need to create a new venue for identity verification
+- At the beginning of your event planning process
 
 ## Request Body
 
@@ -52,4 +62,9 @@ The API returns the created event object with all its details, including the gen
   "is_deleted": false,
   "created_at": "2023-02-28T12:00:00Z"
 }
-``` 
+```
+
+**Important fields:**
+- `type`: Use "dated" for one-time events with start/end times, or "fixed" for permanent locations
+- `imageUrl`: An image representing your event (shows up in notifications and the check-in interface)
+- `instructions`: Special guidance for attendees that will appear in their invitations 

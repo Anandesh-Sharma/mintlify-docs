@@ -3,7 +3,18 @@ title: 'Register Attendee'
 openapi: 'POST /register-attendee/{event_id}'
 ---
 
-This endpoint allows you to register a new attendee for a specific event. All attendee information must be provided in the request body.
+This endpoint allows you to directly register someone for an event without going through the invitation process. This is useful for on-site registrations or when you're managing attendees directly.
+
+**What it does:**
+- Adds a new attendee directly to an event
+- Creates a complete attendee record with all necessary information
+- Bypasses the invitation flow (useful for immediate registrations)
+
+**When to use it:**
+- For on-site registration at event check-in
+- When an admin needs to manually add attendees
+- When you want to skip the invitation process
+- For bulk importing attendees from another system
 
 ## Path Parameters
 
@@ -47,4 +58,4 @@ Upon successful registration, the API returns a success response:
 }
 ```
 
-This endpoint can be used for self-service registration or for admin-managed registration of attendees. 
+**Important note:** The `img_url` field is particularly important for Securegate's facial recognition system. This is the reference image that will be used to verify the attendee's identity during check-in. Make sure it's a clear, front-facing photo of the person. 

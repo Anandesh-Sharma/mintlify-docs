@@ -3,7 +3,18 @@ title: 'Get Token'
 openapi: 'GET /get-token'
 ---
 
-This endpoint generates an authentication token for a specific collection. The token is required for subsequent API calls that need authentication.
+This endpoint generates a temporary authentication token that you can use for subsequent API calls. While most endpoints use the x-api-key header for authentication, some operations require a temporary token.
+
+**What it does:**
+- Generates a short-lived access token for API authentication
+- Returns details about the token including its expiration time
+- Creates credentials that can be passed to client-side applications
+
+**When to use it:**
+- When you need a temporary token for security reasons
+- For client-side applications that shouldn't store your permanent API key
+- When you want to grant limited-time access to the API
+- For implementing proper token-based authentication flows
 
 ## Query Parameters
 
@@ -31,4 +42,6 @@ Include this token in the Authorization header of subsequent API requests:
 
 ```
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
-``` 
+```
+
+**Security tip:** These tokens are temporary by design. Don't store them permanently, and always implement proper token refresh mechanisms in your application. 

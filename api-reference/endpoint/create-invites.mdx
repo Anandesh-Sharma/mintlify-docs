@@ -3,7 +3,18 @@ title: 'Create Invites'
 openapi: 'POST /events/{event_id}/invites'
 ---
 
-This endpoint allows you to create a batch of invites for a specific event. You can specify the onboarding flow type and notification settings.
+This endpoint sends invitations to people for your event. Unlike public events, Securegate focuses on controlled access - only invited and verified attendees can enter your event.
+
+**What it does:**
+- Sends invitations to multiple people at once
+- Generates unique invitation codes for each person
+- Sets up the identity verification process for attendees
+- Allows you to customize the security level required (simple authentication or full KYC)
+
+**When to use it:**
+- When you've created an event and are ready to invite attendees
+- To send secure invitations that require identity verification
+- When planning events with restricted access requirements
 
 ## Path Parameters
 
@@ -15,8 +26,8 @@ This endpoint allows you to create a batch of invites for a specific event. You 
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `onboarding_flow_type` | string | No | The type of onboarding flow to use. Defaults to "only_auth". Options include: "only_auth", "kyc", "ssn_verification", "peps_sanctions", "criminal_check" |
-| `notify` | integer | No | Whether to send notifications. Defaults to 2 |
+| `onboarding_flow_type` | string | No | The level of verification required. Options: "only_auth" (basic facial recognition), "kyc" (full identity verification), "ssn_verification", "peps_sanctions", "criminal_check" (advanced security checks) |
+| `notify` | integer | No | Whether to send email notifications automatically. Defaults to 2 |
 
 ## Request Body
 
@@ -44,6 +55,11 @@ The request body should include an array of invite objects:
   ]
 }
 ```
+
+**Authentication methods:**
+- `QR Code`: Attendees will verify with a QR code (simpler)
+- `Biometric`: Attendees will verify with facial recognition (more secure)
+- `Both`: Attendees will need both QR and facial recognition (highest security)
 
 ## Response
 
@@ -82,4 +98,6 @@ The API returns an array of created invite objects with all their details, inclu
     "updated_at": "2023-02-28T12:01:00Z"
   }
 ]
-``` 
+```
+
+**Note:** After sending invites, you can track their status (pending, sent, accepted, rejected) using the [Get Invites](/api-reference/endpoint/get-invites) endpoint. 

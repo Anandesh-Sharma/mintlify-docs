@@ -3,7 +3,18 @@ title: 'Get Invite With Event'
 openapi: 'GET /invites-with-event'
 ---
 
-This endpoint retrieves detailed information about an invite along with its associated event. You can query using either a session ID or an invite ID.
+This endpoint retrieves both invitation details and information about the associated event in a single call. It's perfect for creating attendee-facing interfaces where you need to show both the invitation and event information.
+
+**What it does:**
+- Fetches an invitation and its associated event details in one request
+- Can find the invitation using either a session ID or invite ID
+- Returns comprehensive information about both the invitation and the event
+
+**When to use it:**
+- When building user-facing invitation portals
+- For creating digital tickets that show event details
+- When displaying "Your Invitations" screens in an app
+- To get complete context about an invitation and its event
 
 ## Query Parameters
 
@@ -57,4 +68,4 @@ The API returns a response object containing the invite details and its associat
 }
 ```
 
-This endpoint is particularly useful for displaying comprehensive information about an invite in user interfaces, where both invite details and event context are needed. 
+**Efficiency note:** This endpoint combines what would otherwise be two separate API calls (getting invite details and getting event details), making your application more efficient and providing a better user experience. 

@@ -11,18 +11,6 @@
   "navigation": {
     "tabs": [
       {
-        "tab": "Guides",
-        "groups": [
-          {
-            "group": "Get Started",
-            "pages": [
-              "index",
-              "quickstart"
-            ]
-          }
-        ]
-      },
-      {
         "tab": "API Reference",
         "groups": [
           {
@@ -38,13 +26,6 @@
               "api-reference/endpoint/create-event",
               "api-reference/endpoint/get-event",
               "api-reference/endpoint/delete-event"
-            ]
-          },
-          {
-            "group": "Attendee Management",
-            "pages": [
-              "api-reference/endpoint/get-attendees",
-              "api-reference/endpoint/register-attendee"
             ]
           },
           {

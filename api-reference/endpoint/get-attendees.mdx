@@ -3,7 +3,18 @@ title: 'Get Attendees'
 openapi: 'GET /attendees/{event_id}'
 ---
 
-This endpoint retrieves all attendees who have registered for a specific event.
+This endpoint retrieves a list of all people who have registered for a specific event. This is different from invites - these are confirmed attendees who have completed registration.
+
+**What it does:**
+- Provides a complete list of registered attendees for an event
+- Includes detailed information about each person (name, email, ID, etc.)
+- Shows when each person registered
+
+**When to use it:**
+- When preparing for an event to know who's coming
+- For generating name badges or check-in lists
+- When you need to contact all registered attendees
+- For reporting on event attendance
 
 ## Path Parameters
 
@@ -40,4 +51,9 @@ The API returns an array of attendee objects with their complete details:
 ]
 ```
 
-Use this endpoint to retrieve the full list of attendees for check-in processes, creating name badges, or generating attendee reports. 
+**Important fields:**
+- `ticket_number`: A unique identifier for each attendee's ticket
+- `img_url`: Profile photo that can be used for visual identification
+- `registration_time`: When the person completed their registration
+
+Use this information to prepare for your event, create check-in sheets, or generate attendance reports. 

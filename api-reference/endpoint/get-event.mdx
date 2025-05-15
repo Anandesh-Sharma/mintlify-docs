@@ -3,7 +3,18 @@ title: 'Get Event With Stats'
 openapi: 'GET /events/{event_id}'
 ---
 
-This endpoint retrieves a specific event by its ID, along with comprehensive statistics about invitations related to the event.
+This endpoint retrieves detailed information about a specific event, including statistics about invitations. It's perfect for building event dashboards and monitoring attendance.
+
+**What it does:**
+- Fetches complete information about a single event using its ID
+- Provides statistics about invitations (sent, accepted, pending, rejected)
+- Shows you the current status of your event and its attendance metrics
+
+**When to use it:**
+- When building an event management dashboard
+- When you need to monitor invitation response rates
+- When checking how many people have accepted your invitations
+- Before an event to assess expected attendance
 
 ## Path Parameters
 
@@ -44,4 +55,10 @@ The API returns the event object with all its details, including invitation stat
 }
 ```
 
-The `invite_stats` field provides a quick overview of invitation statuses, allowing you to monitor event participation at a glance. 
+The `invite_stats` field shows you:
+- How many invitations were sent total (`total`)
+- How many people have accepted your invitation (`accepted`)
+- How many haven't responded yet (`pending`)
+- How many declined to attend (`rejected`)
+
+This helps you gauge interest and plan accordingly for your event's attendance. 
