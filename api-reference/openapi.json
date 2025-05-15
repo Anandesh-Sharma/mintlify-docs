@@ -6,8 +6,8 @@
   },
   "servers": [
     {
-      "url": "https://dev.events.backendly.io",
-      "description": "Staging environment"
+      "url": "https://api.securegate.ai",
+      "description": "Production environment"
     }
   ],
   "security": [
