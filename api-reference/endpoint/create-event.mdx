@@ -1,0 +1,55 @@
+---
+title: 'Create Event'
+openapi: 'POST /events'
+---
+
+This endpoint allows you to create a new event in the system. You must provide all the required event details in the request body.
+
+## Request Body
+
+The request body should include the event details following the EventCreate schema:
+
+```json
+{
+  "title": "Annual Tech Conference",
+  "description": "Join us for the annual tech conference featuring speakers from top tech companies",
+  "instructions": "Please arrive 30 minutes before the event starts for registration",
+  "imageUrl": "https://example.com/event-image.jpg",
+  "location": {
+    "address": "123 Conference Center Dr",
+    "city": "San Francisco",
+    "state": "CA",
+    "zipCode": "94105",
+    "country": "USA"
+  },
+  "start_timestamp": 1677609600,
+  "end_timestamp": 1677696000,
+  "type": "dated"
+}
+```
+
+## Response
+
+The API returns the created event object with all its details, including the generated event ID:
+
+```json
+{
+  "id": "event-123",
+  "title": "Annual Tech Conference",
+  "description": "Join us for the annual tech conference featuring speakers from top tech companies",
+  "instructions": "Please arrive 30 minutes before the event starts for registration",
+  "imageUrl": "https://example.com/event-image.jpg",
+  "location": {
+    "address": "123 Conference Center Dr",
+    "city": "San Francisco",
+    "state": "CA",
+    "zipCode": "94105",
+    "country": "USA"
+  },
+  "start_timestamp": 1677609600,
+  "end_timestamp": 1677696000,
+  "type": "dated",
+  "is_deleted": false,
+  "created_at": "2023-02-28T12:00:00Z"
+}
+``` 

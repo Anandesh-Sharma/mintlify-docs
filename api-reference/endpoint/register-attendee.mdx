@@ -1,0 +1,50 @@
+---
+title: 'Register Attendee'
+openapi: 'POST /register-attendee/{event_id}'
+---
+
+This endpoint allows you to register a new attendee for a specific event. All attendee information must be provided in the request body.
+
+## Path Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `event_id` | string | Yes | The unique identifier of the event the attendee is registering for |
+
+## Request Body
+
+The request body should include the following attendee information:
+
+```json
+{
+  "first_name": "John",
+  "last_name": "Doe",
+  "email": "john.doe@example.com",
+  "ticket_number": "TICKET123",
+  "user_id": "user-456",
+  "img_url": "https://example.com/profile-photos/john-doe.jpg"
+}
+```
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `first_name` | string | Yes | The attendee's first name |
+| `last_name` | string | Yes | The attendee's last name |
+| `email` | string | Yes | The attendee's email address |
+| `ticket_number` | string | Yes | The attendee's ticket or registration number |
+| `user_id` | string | Yes | The attendee's user ID in your system |
+| `img_url` | string | Yes | URL to the attendee's profile photo or avatar |
+
+## Response
+
+Upon successful registration, the API returns a success response:
+
+```json
+{
+  "status": "success",
+  "message": "Attendee registered successfully",
+  "attendee_id": "attendee-123"
+}
+```
+
+This endpoint can be used for self-service registration or for admin-managed registration of attendees. 

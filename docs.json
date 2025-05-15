@@ -20,17 +20,6 @@
               "quickstart",
               "development"
             ]
-          },
-          {
-            "group": "Essentials",
-            "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/settings",
-              "essentials/navigation",
-              "essentials/reusable-snippets"
-            ]
           }
         ]
       },
@@ -44,52 +33,58 @@
             ]
           },
           {
-            "group": "Endpoint Examples",
+            "group": "Event Management",
             "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
+              "api-reference/endpoint/get-events",
+              "api-reference/endpoint/create-event",
+              "api-reference/endpoint/get-event",
+              "api-reference/endpoint/delete-event"
+            ]
+          },
+          {
+            "group": "Attendee Management",
+            "pages": [
+              "api-reference/endpoint/get-attendees",
+              "api-reference/endpoint/register-attendee"
+            ]
+          },
+          {
+            "group": "Invite Management",
+            "pages": [
+              "api-reference/endpoint/create-invites",
+              "api-reference/endpoint/get-invites",
+              "api-reference/endpoint/get-invite-by-id",
+              "api-reference/endpoint/get-invite-by-email",
+              "api-reference/endpoint/update-invite-status",
+              "api-reference/endpoint/get-invite-with-event"
+            ]
+          },
+          {
+            "group": "Authentication & Identity",
+            "pages": [
+              "api-reference/endpoint/get-token",
+              "api-reference/endpoint/get-identity"
             ]
           }
         ]
       }
-    ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
-        },
-        {
-          "anchor": "Community",
-          "href": "https://mintlify.com/community",
-          "icon": "slack"
-        },
-        {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
-        }
-      ]
-    }
+    ]
   },
   "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
+    "light": "/logo/download.png",
+    "dark": "/logo/download.png"
   },
   "navbar": {
     "links": [
       {
         "label": "Support",
-        "href": "mailto:hi@mintlify.com"
+        "href": "mailto:support@securegate.ai"
       }
     ],
     "primary": {
       "type": "button",
-      "label": "Dashboard",
-      "href": "https://dashboard.mintlify.com"
+      "label": "Try now",
+      "href": "https://securegate.stage.satschel.com"
     }
   },
   "footer": {
@@ -98,5 +93,9 @@
       "github": "https://github.com/mintlify",
       "linkedin": "https://linkedin.com/company/mintlify"
     }
+  },
+  "appearance": {
+    "strict": true,
+    "default": "light"
   }
 }

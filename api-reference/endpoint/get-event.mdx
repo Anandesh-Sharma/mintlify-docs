@@ -1,0 +1,47 @@
+---
+title: 'Get Event With Stats'
+openapi: 'GET /events/{event_id}'
+---
+
+This endpoint retrieves a specific event by its ID, along with comprehensive statistics about invitations related to the event.
+
+## Path Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `event_id` | string | Yes | The unique identifier of the event to retrieve |
+
+## Response
+
+The API returns the event object with all its details, including invitation statistics:
+
+```json
+{
+  "id": "event-123",
+  "description": "Join us for the annual tech conference featuring speakers from top tech companies",
+  "instructions": "Please arrive 30 minutes before the event starts for registration",
+  "title": "Annual Tech Conference",
+  "imageUrl": "https://example.com/event-image.jpg",
+  "status": "upcoming",
+  "type": "dated",
+  "location": {
+    "address": "123 Conference Center Dr",
+    "city": "San Francisco",
+    "state": "CA",
+    "zipCode": "94105",
+    "country": "USA"
+  },
+  "start_timestamp": 1677609600,
+  "end_timestamp": 1677696000,
+  "is_deleted": false,
+  "invite_stats": {
+    "sent": 150,
+    "accepted": 75,
+    "pending": 50,
+    "rejected": 25,
+    "total": 150
+  }
+}
+```
+
+The `invite_stats` field provides a quick overview of invitation statuses, allowing you to monitor event participation at a glance. 

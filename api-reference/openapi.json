@@ -1,72 +1,41 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "title": "OpenAPI Plant Store",
-    "description": "A sample API that uses a plant store as an example to demonstrate features in the OpenAPI specification",
-    "license": {
-      "name": "MIT"
-    },
-    "version": "1.0.0"
+    "title": "Securegate.ai API",
+    "version": "0.1.0"
   },
   "servers": [
     {
-      "url": "http://sandbox.mintlify.com"
-    }
-  ],
-  "security": [
-    {
-      "bearerAuth": []
+      "url": "https://dev.events.backendly.io",
+      "description": "Staging environment"
     }
   ],
   "paths": {
-    "/plants": {
+    "/events": {
       "get": {
-        "description": "Returns all plants from the system that the user has access to",
-        "parameters": [
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "The maximum number of results to return",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
+        "summary": "Get All Events",
+        "description": "Get all events, categorized by status",
+        "operationId": "get_all_events_events_get",
         "responses": {
           "200": {
-            "description": "Plant response",
+            "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Plant"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
+                "schema": {}
               }
             }
           }
         }
       },
       "post": {
-        "description": "Creates a new plant in the store",
+        "summary": "Create Event",
+        "description": "Create a new event",
+        "operationId": "create_event_events_post",
         "requestBody": {
-          "description": "Plant to add to the store",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewPlant"
+                "$ref": "#/components/schemas/EventCreate"
               }
             }
           },
@@ -74,21 +43,21 @@
         },
         "responses": {
           "200": {
-            "description": "plant response",
+            "description": "Successful Response",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Plant"
+                  "$ref": "#/components/schemas/Event"
                 }
               }
             }
           },
-          "400": {
-            "description": "unexpected error",
+          "422": {
+            "description": "Validation Error",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Error"
+                  "$ref": "#/components/schemas/HTTPValidationError"
                 }
               }
             }
@@ -96,57 +65,609 @@
         }
       }
     },
-    "/plants/{id}": {
+    "/events/{event_id}": {
       "delete": {
-        "description": "Deletes a single plant based on the ID supplied",
+        "summary": "Delete Event",
+        "description": "Mark an event as deleted",
+        "operationId": "delete_event_events__event_id__delete",
         "parameters": [
           {
-            "name": "id",
+            "name": "event_id",
             "in": "path",
-            "description": "ID of plant to delete",
             "required": true,
             "schema": {
-              "type": "integer",
-              "format": "int64"
+              "type": "string",
+              "title": "Event Id"
             }
           }
         ],
         "responses": {
-          "204": {
-            "description": "Plant deleted",
-            "content": {}
-          },
-          "400": {
-            "description": "unexpected error",
+          "200": {
+            "description": "Successful Response",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Error"
+                  "$ref": "#/components/schemas/Event"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Get Event With Stats",
+        "description": "Get a single event by ID with invitation statistics",
+        "operationId": "get_event_with_stats_events__event_id__get",
+        "parameters": [
+          {
+            "name": "event_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Event Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventWithStats"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
                 }
               }
             }
           }
         }
       }
-    }
-  },
-  "webhooks": {
-    "/plant/webhook": {
+    },
+    "/attendees/{event_id}": {
+      "get": {
+        "summary": "Get Attendees",
+        "operationId": "get_attendees_attendees__event_id__get",
+        "parameters": [
+          {
+            "name": "event_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Event Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AttendeeResponse"
+                  },
+                  "title": "Response Get Attendees Attendees  Event Id  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/register-attendee/{event_id}": {
       "post": {
-        "description": "Information about a new plant added to the store",
+        "summary": "Register Attendee",
+        "operationId": "register_attendee_register_attendee__event_id__post",
+        "parameters": [
+          {
+            "name": "event_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Event Id"
+            }
+          }
+        ],
         "requestBody": {
-          "description": "Plant added to the store",
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewPlant"
+                "$ref": "#/components/schemas/Attendee"
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "Return a 200 status to indicate that the data was received successfully"
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/get-token": {
+      "get": {
+        "summary": "Get Token",
+        "operationId": "get_token_get_token_get",
+        "parameters": [
+          {
+            "name": "collection_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Collection Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/events/{event_id}/invites": {
+      "post": {
+        "summary": "Create Invites",
+        "description": "Create a batch of invites for an event",
+        "operationId": "create_invites_events__event_id__invites_post",
+        "parameters": [
+          {
+            "name": "event_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Event Id"
+            }
+          },
+          {
+            "name": "onboarding_flow_type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/OnboardingFlow",
+              "default": "only_auth"
+            }
+          },
+          {
+            "name": "notify",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": 2,
+              "title": "Notify"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InviteBatchRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Invite"
+                  },
+                  "title": "Response Create Invites Events  Event Id  Invites Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Get Invites",
+        "description": "Get all invites for an event with optional status filtering",
+        "operationId": "get_invites_events__event_id__invites_get",
+        "parameters": [
+          {
+            "name": "event_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Event Id"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/InviteStatus"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Status"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Invite"
+                  },
+                  "title": "Response Get Invites Events  Event Id  Invites Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/invites/{invite_id}": {
+      "get": {
+        "summary": "Get Invite By Id",
+        "description": "Get invite details for a single person by invite ID",
+        "operationId": "get_invite_by_id_invites__invite_id__get",
+        "parameters": [
+          {
+            "name": "invite_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Invite Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Invite"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/invites": {
+      "get": {
+        "summary": "Get Invite By Email",
+        "description": "Get invite details for a single person by email address",
+        "operationId": "get_invite_by_email_invites_get",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Email"
+            }
+          },
+          {
+            "name": "event_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Event Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Invite"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/events/{event_id}/invites/{invite_id}": {
+      "put": {
+        "summary": "Update Invite Status",
+        "description": "Update the status of an invite",
+        "operationId": "update_invite_status_events__event_id__invites__invite_id__put",
+        "parameters": [
+          {
+            "name": "event_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Event Id"
+            }
+          },
+          {
+            "name": "invite_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Invite Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InviteStatusUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Invite"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/invites-with-event": {
+      "get": {
+        "summary": "Get Invite With Event",
+        "description": "Get invite details along with associated event information",
+        "operationId": "get_invite_with_event_invites_with_event_get",
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Session Id"
+            }
+          },
+          {
+            "name": "invite_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Invite Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InviteWithEvent"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/identity": {
+      "post": {
+        "summary": "Get Session From Image",
+        "operationId": "get_session_from_image_identity_post",
+        "parameters": [
+          {
+            "name": "event_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Event Id"
+            }
+          },
+          {
+            "name": "image_url",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Image Url"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
           }
         }
       }
@@ -154,63 +675,1040 @@
   },
   "components": {
     "schemas": {
-      "Plant": {
+      "Attendee": {
+        "properties": {
+          "first_name": {
+            "type": "string",
+            "title": "First Name"
+          },
+          "last_name": {
+            "type": "string",
+            "title": "Last Name"
+          },
+          "email": {
+            "type": "string",
+            "title": "Email"
+          },
+          "ticket_number": {
+            "type": "string",
+            "title": "Ticket Number"
+          },
+          "user_id": {
+            "type": "string",
+            "title": "User Id"
+          },
+          "img_url": {
+            "type": "string",
+            "title": "Img Url"
+          }
+        },
+        "type": "object",
+        "required": [
+          "first_name",
+          "last_name",
+          "email",
+          "ticket_number",
+          "user_id",
+          "img_url"
+        ],
+        "title": "Attendee"
+      },
+      "AttendeeResponse": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "first_name": {
+            "type": "string",
+            "title": "First Name"
+          },
+          "last_name": {
+            "type": "string",
+            "title": "Last Name"
+          },
+          "email": {
+            "type": "string",
+            "title": "Email"
+          },
+          "ticket_number": {
+            "type": "string",
+            "title": "Ticket Number"
+          },
+          "user_id": {
+            "type": "string",
+            "title": "User Id"
+          },
+          "img_url": {
+            "type": "string",
+            "title": "Img Url"
+          },
+          "registration_time": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Registration Time"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "first_name",
+          "last_name",
+          "email",
+          "ticket_number",
+          "user_id",
+          "img_url"
+        ],
+        "title": "AttendeeResponse"
+      },
+      "AuthenticationMethod": {
+        "type": "string",
+        "enum": [
+          "QR Code",
+          "Biometric",
+          "Both"
+        ],
+        "title": "AuthenticationMethod"
+      },
+      "Camera": {
+        "properties": {
+          "room_id": {
+            "type": "string",
+            "title": "Room Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "type": {
+            "type": "integer",
+            "title": "Type",
+            "default": 3
+          },
+          "is_active": {
+            "type": "boolean",
+            "title": "Is Active",
+            "default": false
+          },
+          "agora_channel": {
+            "type": "string",
+            "title": "Agora Channel"
+          },
+          "camera_label": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Camera Label"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "camera_id": {
+            "type": "string",
+            "title": "Camera Id"
+          },
+          "event_id": {
+            "type": "string",
+            "title": "Event Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "room_id",
+          "name",
+          "agora_channel",
+          "camera_id",
+          "event_id"
+        ],
+        "title": "Camera"
+      },
+      "CameraCreate": {
+        "properties": {
+          "room_id": {
+            "type": "string",
+            "title": "Room Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "type": {
+            "type": "integer",
+            "title": "Type",
+            "default": 3
+          },
+          "is_active": {
+            "type": "boolean",
+            "title": "Is Active",
+            "default": false
+          },
+          "agora_channel": {
+            "type": "string",
+            "title": "Agora Channel"
+          },
+          "camera_label": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Camera Label"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          }
+        },
+        "type": "object",
+        "required": [
+          "room_id",
+          "name",
+          "agora_channel"
+        ],
+        "title": "CameraCreate"
+      },
+      "CameraUpdate": {
+        "properties": {
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "type": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Type"
+          },
+          "is_active": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Is Active"
+          },
+          "agora_channel": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Agora Channel"
+          },
+          "camera_label": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Camera Label"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          }
+        },
+        "type": "object",
+        "title": "CameraUpdate"
+      },
+      "CountryCodeSimple": {
+        "type": "string",
+        "enum": [
+          "1",
+          "44",
+          "1",
+          "61",
+          "91",
+          "345"
+        ],
+        "title": "CountryCodeSimple"
+      },
+      "Event": {
+        "properties": {
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "description": {
+            "type": "string",
+            "title": "Description",
+            "default": ""
+          },
+          "instructions": {
+            "type": "string",
+            "title": "Instructions",
+            "default": ""
+          },
+          "imageUrl": {
+            "type": "string",
+            "title": "Imageurl"
+          },
+          "location": {
+            "$ref": "#/components/schemas/EventLocation"
+          },
+          "start_timestamp": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Start Timestamp"
+          },
+          "end_timestamp": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "End Timestamp"
+          },
+          "type": {
+            "$ref": "#/components/schemas/EventType",
+            "default": "dated"
+          },
+          "is_deleted": {
+            "type": "boolean",
+            "title": "Is Deleted",
+            "default": false
+          },
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "created_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Created At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "title",
+          "imageUrl",
+          "location",
+          "id"
+        ],
+        "title": "Event"
+      },
+      "EventCreate": {
+        "properties": {
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "description": {
+            "type": "string",
+            "title": "Description",
+            "default": ""
+          },
+          "instructions": {
+            "type": "string",
+            "title": "Instructions",
+            "default": ""
+          },
+          "imageUrl": {
+            "type": "string",
+            "title": "Imageurl"
+          },
+          "location": {
+            "$ref": "#/components/schemas/EventLocation"
+          },
+          "start_timestamp": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Start Timestamp"
+          },
+          "end_timestamp": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "End Timestamp"
+          },
+          "type": {
+            "$ref": "#/components/schemas/EventType",
+            "default": "dated"
+          },
+          "is_deleted": {
+            "type": "boolean",
+            "title": "Is Deleted",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "title",
+          "imageUrl",
+          "location"
+        ],
+        "title": "EventCreate"
+      },
+      "EventLocation": {
+        "properties": {
+          "address": {
+            "type": "string",
+            "title": "Address"
+          },
+          "city": {
+            "type": "string",
+            "title": "City"
+          },
+          "state": {
+            "type": "string",
+            "title": "State"
+          },
+          "zipCode": {
+            "type": "string",
+            "title": "Zipcode"
+          },
+          "country": {
+            "type": "string",
+            "title": "Country"
+          }
+        },
+        "type": "object",
+        "required": [
+          "address",
+          "city",
+          "state",
+          "zipCode",
+          "country"
+        ],
+        "title": "EventLocation"
+      },
+      "EventType": {
+        "type": "string",
+        "enum": [
+          "fixed",
+          "dated"
+        ],
+        "title": "EventType"
+      },
+      "EventWithStats": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "description": {
+            "type": "string",
+            "title": "Description"
+          },
+          "instructions": {
+            "type": "string",
+            "title": "Instructions"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "imageUrl": {
+            "type": "string",
+            "title": "Imageurl"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "type": {
+            "$ref": "#/components/schemas/EventType"
+          },
+          "location": {
+            "$ref": "#/components/schemas/EventLocation"
+          },
+          "start_timestamp": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Start Timestamp"
+          },
+          "end_timestamp": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "End Timestamp"
+          },
+          "is_deleted": {
+            "type": "boolean",
+            "title": "Is Deleted"
+          },
+          "invite_stats": {
+            "$ref": "#/components/schemas/InviteStats"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "description",
+          "instructions",
+          "title",
+          "imageUrl",
+          "status",
+          "type",
+          "location",
+          "is_deleted",
+          "invite_stats"
+        ],
+        "title": "EventWithStats"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "Invite": {
+        "properties": {
+          "first_name": {
+            "type": "string",
+            "title": "First Name"
+          },
+          "last_name": {
+            "type": "string",
+            "title": "Last Name"
+          },
+          "email": {
+            "type": "string",
+            "title": "Email"
+          },
+          "country_code": {
+            "$ref": "#/components/schemas/CountryCodeSimple"
+          },
+          "mobile_number": {
+            "type": "string",
+            "title": "Mobile Number"
+          },
+          "authentication_method": {
+            "$ref": "#/components/schemas/AuthenticationMethod"
+          },
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "event_id": {
+            "type": "string",
+            "title": "Event Id"
+          },
+          "session_code": {
+            "type": "string",
+            "title": "Session Code"
+          },
+          "image": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Image"
+          },
+          "session_id": {
+            "type": "string",
+            "title": "Session Id"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Updated At"
+          },
+          "last_seen": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Seen"
+          },
+          "onyxplus_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Onyxplus Id"
+          },
+          "ticket_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ticket Id"
+          },
+          "status": {
+            "$ref": "#/components/schemas/InviteStatus",
+            "default": "pending"
+          }
+        },
+        "type": "object",
+        "required": [
+          "first_name",
+          "last_name",
+          "email",
+          "country_code",
+          "mobile_number",
+          "authentication_method",
+          "id",
+          "event_id",
+          "session_code",
+          "session_id",
+          "created_at",
+          "updated_at"
+        ],
+        "title": "Invite"
+      },
+      "InviteBatchRequest": {
+        "properties": {
+          "invites": {
+            "items": {
+              "$ref": "#/components/schemas/InviteCreate"
+            },
+            "type": "array",
+            "title": "Invites"
+          }
+        },
+        "type": "object",
+        "required": [
+          "invites"
+        ],
+        "title": "InviteBatchRequest"
+      },
+      "InviteCreate": {
+        "properties": {
+          "first_name": {
+            "type": "string",
+            "title": "First Name"
+          },
+          "last_name": {
+            "type": "string",
+            "title": "Last Name"
+          },
+          "email": {
+            "type": "string",
+            "title": "Email"
+          },
+          "country_code": {
+            "$ref": "#/components/schemas/CountryCodeSimple"
+          },
+          "mobile_number": {
+            "type": "string",
+            "title": "Mobile Number"
+          },
+          "authentication_method": {
+            "$ref": "#/components/schemas/AuthenticationMethod"
+          }
+        },
+        "type": "object",
+        "required": [
+          "first_name",
+          "last_name",
+          "email",
+          "country_code",
+          "mobile_number",
+          "authentication_method"
+        ],
+        "title": "InviteCreate"
+      },
+      "InviteStats": {
+        "properties": {
+          "sent": {
+            "type": "integer",
+            "title": "Sent"
+          },
+          "accepted": {
+            "type": "integer",
+            "title": "Accepted"
+          },
+          "pending": {
+            "type": "integer",
+            "title": "Pending"
+          },
+          "rejected": {
+            "type": "integer",
+            "title": "Rejected"
+          },
+          "total": {
+            "type": "integer",
+            "title": "Total"
+          }
+        },
+        "type": "object",
+        "required": [
+          "sent",
+          "accepted",
+          "pending",
+          "rejected",
+          "total"
+        ],
+        "title": "InviteStats"
+      },
+      "InviteStatus": {
+        "type": "string",
+        "enum": [
+          "pending",
+          "sent",
+          "accepted",
+          "rejected"
+        ],
+        "title": "InviteStatus"
+      },
+      "InviteStatusUpdate": {
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/InviteStatus"
+          }
+        },
+        "type": "object",
+        "required": [
+          "status"
+        ],
+        "title": "InviteStatusUpdate"
+      },
+      "InviteWithEvent": {
+        "properties": {
+          "invite": {
+            "$ref": "#/components/schemas/Invite"
+          },
+          "event": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Event"
+          }
+        },
+        "type": "object",
+        "required": [
+          "invite"
+        ],
+        "title": "InviteWithEvent"
+      },
+      "OnboardingFlow": {
+        "type": "string",
+        "enum": [
+          "only_auth",
+          "kyc",
+          "ssn_verification",
+          "peps_sanctions",
+          "criminal_check"
+        ],
+        "title": "OnboardingFlow"
+      },
+      "Room": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "room_id": {
+            "type": "string",
+            "title": "Room Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "room_id"
+        ],
+        "title": "Room"
+      },
+      "RoomCreate": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          }
+        },
+        "type": "object",
         "required": [
           "name"
         ],
-        "type": "object",
-        "properties": {
-          "name": {
-            "description": "The name of the plant",
-            "type": "string"
-          },
-          "tag": {
-            "description": "Tag to specify the type",
-            "type": "string"
-          }
-        }
+        "title": "RoomCreate"
       },
-      "NewPlant": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/Plant"
+      "TimelineEntry": {
+        "properties": {
+          "user_id": {
+            "type": "string",
+            "title": "User Id"
           },
-          {
-            "required": [
-              "id"
-            ],
-            "type": "object",
-            "properties": {
-              "id": {
-                "description": "Identification number of the plant",
-                "type": "integer",
-                "format": "int64"
+          "camera_id": {
+            "type": "string",
+            "title": "Camera Id"
+          },
+          "room_id": {
+            "type": "string",
+            "title": "Room Id"
+          },
+          "entry_time": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Entry Time"
+          },
+          "exit_time": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
               }
-            }
-          }
-        ]
-      },
-      "Error": {
-        "required": [
-          "error",
-          "message"
-        ],
-        "type": "object",
-        "properties": {
-          "error": {
-            "type": "integer",
-            "format": "int32"
+            ],
+            "title": "Exit Time"
           },
-          "message": {
-            "type": "string"
+          "duration": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Duration"
+          },
+          "similarity": {
+            "type": "number",
+            "title": "Similarity"
+          },
+          "image": {
+            "type": "string",
+            "title": "Image"
           }
-        }
-      }
-    },
-    "securitySchemes": {
-      "bearerAuth": {
-        "type": "http",
-        "scheme": "bearer"
+        },
+        "type": "object",
+        "required": [
+          "user_id",
+          "camera_id",
+          "room_id",
+          "entry_time",
+          "exit_time",
+          "duration",
+          "similarity",
+          "image"
+        ],
+        "title": "TimelineEntry"
+      },
+      "TimelineResponse": {
+        "properties": {
+          "entries": {
+            "items": {
+              "$ref": "#/components/schemas/TimelineEntry"
+            },
+            "type": "array",
+            "title": "Entries"
+          },
+          "total_entries": {
+            "type": "integer",
+            "title": "Total Entries"
+          },
+          "total_unique_users": {
+            "type": "integer",
+            "title": "Total Unique Users"
+          },
+          "total_duration": {
+            "type": "number",
+            "title": "Total Duration"
+          },
+          "average_duration": {
+            "type": "number",
+            "title": "Average Duration"
+          },
+          "peak_occupancy": {
+            "type": "integer",
+            "title": "Peak Occupancy"
+          },
+          "peak_time": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Peak Time"
+          }
+        },
+        "type": "object",
+        "required": [
+          "entries",
+          "total_entries",
+          "total_unique_users",
+          "total_duration",
+          "average_duration",
+          "peak_occupancy",
+          "peak_time"
+        ],
+        "title": "TimelineResponse"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
       }
     }
   }

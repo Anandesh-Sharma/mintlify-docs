@@ -1,0 +1,27 @@
+---
+title: 'Get All Events'
+openapi: 'GET /events'
+---
+
+This endpoint returns all events in the system, categorized by their status. Use this endpoint to retrieve a comprehensive list of events for display or further processing.
+
+## Response
+
+The response contains a list of all events organized by their status (upcoming, ongoing, past, etc). Each event includes its complete details including title, description, location, and timestamps.
+
+```json
+{
+  "upcoming": [
+    {
+      "id": "event-123",
+      "title": "Annual Conference",
+      "description": "Join us for our annual industry conference",
+      "location": { /* location details */ },
+      "start_timestamp": 1677609600,
+      "end_timestamp": 1677696000
+    }
+  ],
+  "ongoing": [ /* ongoing events */ ],
+  "past": [ /* past events */ ]
+}
+``` 

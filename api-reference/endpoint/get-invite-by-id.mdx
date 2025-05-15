@@ -1,0 +1,40 @@
+---
+title: 'Get Invite By ID'
+openapi: 'GET /invites/{invite_id}'
+---
+
+This endpoint retrieves detailed information about a specific invite using its unique ID.
+
+## Path Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `invite_id` | string | Yes | The unique identifier of the invite |
+
+## Response
+
+The API returns the invite object with all its details:
+
+```json
+{
+  "id": "invite-123",
+  "first_name": "John",
+  "last_name": "Doe",
+  "email": "john.doe@example.com",
+  "country_code": "1",
+  "mobile_number": "5551234567",
+  "authentication_method": "QR Code",
+  "event_id": "event-456",
+  "session_code": "ABC123",
+  "session_id": "session-789",
+  "image": "https://example.com/profile-photos/john-doe.jpg",
+  "status": "accepted",
+  "created_at": "2023-02-28T12:00:00Z",
+  "updated_at": "2023-03-01T09:30:00Z",
+  "last_seen": "2023-03-01T10:15:00Z",
+  "onyxplus_id": "onyx-123",
+  "ticket_id": "ticket-456"
+}
+```
+
+Use this endpoint to view detailed information about an individual invite, such as their contact information, authentication method, and current status. 

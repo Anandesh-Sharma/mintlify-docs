@@ -1,33 +1,42 @@
 ---
 title: 'Introduction'
-description: 'Example section for showcasing API endpoints'
+description: 'Welcome to the Securegate.ai API documentation'
 ---
 
-<Note>
-  If you're not looking to build API reference documentation, you can delete
-  this section by removing the api-reference folder.
-</Note>
+## Overview
 
-## Welcome
-
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
+Securegate.ai provides a comprehensive API for event management, attendee registration, and identity verification. Our API allows you to create and manage events, handle invitations, register attendees, and implement secure identity verification.
 
 <Card
-  title="Plant Store Endpoints"
-  icon="leaf"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
+  title="Securegate.ai API Endpoints"
+  icon="shield-check"
+  href="/api-reference/endpoint/get-events"
 >
-  View the OpenAPI specification file
+  Get started with our API
 </Card>
+
+## API Structure
+
+Our API is organized into several functional areas:
+
+- **Event Management**: Create, retrieve, and manage events
+- **Attendee Management**: Register attendees and retrieve attendee information
+- **Invite Management**: Create and manage invitations for events
+- **Authentication & Identity**: Generate authentication tokens and verify identity
 
 ## Authentication
 
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
+All API endpoints are authenticated using Bearer tokens. You can obtain a token using the [Get Token](/api-reference/endpoint/get-token) endpoint.
 
 ```json
-"security": [
-  {
-    "bearerAuth": []
+// Include this in your API requests
+{
+  "headers": {
+    "Authorization": "Bearer your_access_token_here"
   }
-]
+}
 ```
+
+## Rate Limiting
+
+Our API implements rate limiting to ensure fair usage and system stability. Each API key has a quota of 100 requests per minute. If you exceed this limit, you'll receive a 429 Too Many Requests response.

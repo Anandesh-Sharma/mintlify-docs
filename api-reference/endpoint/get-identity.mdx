@@ -1,0 +1,34 @@
+---
+title: 'Identify Personal'
+openapi: 'POST /identity'
+---
+
+This endpoint identifies a person from an image at a specific event. It uses facial recognition technology to match the image against registered attendees.
+
+## Query Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `event_id` | string | Yes | The unique identifier of the event |
+| `image_url` | string | Yes | URL to the image to be used for identification |
+
+## Response
+
+The API returns session information for the identified person:
+
+```json
+{
+  "session_id": "session-123",
+  "user_id": "user-456",
+  "first_name": "John",
+  "last_name": "Doe",
+  "email": "john.doe@example.com",
+  "similarity_score": 0.95,
+  "matched": true,
+  "timestamp": "2023-03-01T14:30:00Z"
+}
+```
+
+If no match is found, the `matched` field will be `false` and personal information fields will be null.
+
+This endpoint is commonly used for event check-in processes, security verification, and personalized experiences at events.

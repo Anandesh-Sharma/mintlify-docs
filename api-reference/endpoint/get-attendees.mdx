@@ -1,0 +1,43 @@
+---
+title: 'Get Attendees'
+openapi: 'GET /attendees/{event_id}'
+---
+
+This endpoint retrieves all attendees who have registered for a specific event.
+
+## Path Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `event_id` | string | Yes | The unique identifier of the event |
+
+## Response
+
+The API returns an array of attendee objects with their complete details:
+
+```json
+[
+  {
+    "id": "attendee-123",
+    "first_name": "John",
+    "last_name": "Doe",
+    "email": "john.doe@example.com",
+    "ticket_number": "TICKET123",
+    "user_id": "user-456",
+    "img_url": "https://example.com/profile-photos/john-doe.jpg",
+    "registration_time": "2023-02-25T14:30:00Z"
+  },
+  {
+    "id": "attendee-124",
+    "first_name": "Jane",
+    "last_name": "Smith",
+    "email": "jane.smith@example.com",
+    "ticket_number": "TICKET124",
+    "user_id": "user-457",
+    "img_url": "https://example.com/profile-photos/jane-smith.jpg",
+    "registration_time": "2023-02-26T09:15:00Z"
+  }
+]
+```
+
+Use this endpoint to retrieve the full list of attendees for check-in processes, creating name badges, or generating attendee reports. 

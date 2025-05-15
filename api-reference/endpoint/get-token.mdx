@@ -1,0 +1,34 @@
+---
+title: 'Get Token'
+openapi: 'GET /get-token'
+---
+
+This endpoint generates an authentication token for a specific collection. The token is required for subsequent API calls that need authentication.
+
+## Query Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `collection_id` | string | Yes | The unique identifier of the collection |
+
+## Response
+
+The API returns a token object with the authentication token and its expiration time:
+
+```json
+{
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "token_type": "bearer",
+  "expires_in": 3600
+}
+```
+
+The token is valid for the specified expiration time (in seconds). After it expires, a new token must be requested.
+
+## Usage
+
+Include this token in the Authorization header of subsequent API requests:
+
+```
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+``` 
