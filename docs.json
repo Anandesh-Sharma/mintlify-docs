@@ -17,8 +17,7 @@
             "group": "Get Started",
             "pages": [
               "index",
-              "quickstart",
-              "development"
+              "quickstart"
             ]
           }
         ]
@@ -60,9 +59,8 @@
             ]
           },
           {
-            "group": "Authentication & Identity",
+            "group": "Identity Verification",
             "pages": [
-              "api-reference/endpoint/get-token",
               "api-reference/endpoint/get-identity"
             ]
           }

@@ -10,6 +10,11 @@
       "description": "Staging environment"
     }
   ],
+  "security": [
+    {
+      "ApiKeyAuth": []
+    }
+  ],
   "paths": {
     "/events": {
       "get": {
@@ -21,7 +26,39 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ongoing": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Event"
+                      },
+                      "description": "Currently active events"
+                    },
+                    "ended": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Event"
+                      },
+                      "description": "Events that have ended"
+                    },
+                    "up_coming": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Event"
+                      },
+                      "description": "Events that will start in the future"
+                    },
+                    "archived": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Event"
+                      },
+                      "description": "Archived events"
+                    }
+                  }
+                }
               }
             }
           }
@@ -674,6 +711,14 @@
     }
   },
   "components": {
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "x-api-key",
+        "description": "API key authentication. Add your API key as the value of the 'x-api-key' header."
+      }
+    },
     "schemas": {
       "Attendee": {
         "properties": {

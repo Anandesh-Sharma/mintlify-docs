@@ -5,23 +5,75 @@ openapi: 'GET /events'
 
 This endpoint returns all events in the system, categorized by their status. Use this endpoint to retrieve a comprehensive list of events for display or further processing.
 
+## Authentication
+
+This endpoint requires authentication using an API key. Add the following header to your request:
+
+```
+x-api-key: YOUR_API_KEY
+```
+
+To obtain an API key, please contact our support team.
+
 ## Response
 
-The response contains a list of all events organized by their status (upcoming, ongoing, past, etc). Each event includes its complete details including title, description, location, and timestamps.
+The response contains a list of all events organized by their status (ongoing, ended, up_coming, archived). Each event includes its complete details including title, description, location, and timestamps.
 
 ```json
 {
-  "upcoming": [
+  "ongoing": [
     {
-      "id": "event-123",
-      "title": "Annual Conference",
-      "description": "Join us for our annual industry conference",
-      "location": { /* location details */ },
-      "start_timestamp": 1677609600,
-      "end_timestamp": 1677696000
+      "title": "SFO Airport",
+      "description": "",
+      "instructions": "",
+      "imageUrl": "https://securegate-event-images.s3.amazonaws.com/events/4f546045-af01-473d-9e50-6002d0f77461/event_image.png",
+      "location": {
+        "address": "San Francisco, CA 94128, United States",
+        "city": "",
+        "state": "",
+        "zipCode": "",
+        "country": ""
+      },
+      "start_timestamp": null,
+      "end_timestamp": null,
+      "type": "fixed",
+      "is_deleted": false,
+      "id": "fb081980-ceca-4d2a-a7f3-5e044449b701",
+      "created_at": "2025-05-08T14:43:02.308000",
+      "updated_at": "2025-05-08T14:43:02.308000"
+    },
+    {
+      "title": "Newark Airport (ONY)",
+      "description": "",
+      "instructions": "",
+      "imageUrl": "https://securegate-event-images.s3.amazonaws.com/events/2249b3d4-7c91-494a-9145-b803d6412835/event_image.png",
+      "location": {
+        "address": "Newark, NJ 07114, United States",
+        "city": "",
+        "state": "",
+        "zipCode": "",
+        "country": ""
+      },
+      "start_timestamp": null,
+      "end_timestamp": null,
+      "type": "fixed",
+      "is_deleted": false,
+      "id": "2249b3d4-7c91-494a-9145-b803d6412835",
+      "created_at": "2025-05-08T14:46:49.865000",
+      "updated_at": "2025-05-08T14:46:49.865000"
     }
   ],
-  "ongoing": [ /* ongoing events */ ],
-  "past": [ /* past events */ ]
+  "ended": [],
+  "up_coming": [],
+  "archived": []
 }
+```
+
+Each event category contains an array of event objects. If there are no events in a particular category, an empty array is returned for that category.
+
+## Example Request with cURL
+
+```bash
+curl -X GET https://api.securegate.ai/events \
+  -H "x-api-key: YOUR_API_KEY"
 ``` 
